@@ -1,0 +1,1 @@
+docker build -t romixch/lamp:latest .
