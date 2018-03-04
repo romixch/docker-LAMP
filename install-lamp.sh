@@ -8,6 +8,9 @@ sed -i "s,#ServerName www.example.com:80,ServerName $(hostname --fqdn):80,g" /et
 # enable mod rewrite
 sed -i '/^#LoadModule rewrite_module modules\/mod_rewrite.so/s/^#//g' /etc/httpd/conf/httpd.conf
 
+# allow override
+sed -i 's/AllowOverride [N|n]one/AllowOverride All/g' /etc/httpd/conf/httpd.conf
+
 # solve HTTP TRACE vulnerability: http://www.kb.cert.org/vuls/id/867593
 sed -i '$a TraceEnable Off' /etc/httpd/conf/httpd.conf
 
