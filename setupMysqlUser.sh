@@ -16,9 +16,12 @@ if [ "$MYSQL_USER" ] && [ "$MYSQL_PASSWORD" ]; then
     else
         echo "Adding user $MYSQL_USER "
         waitForMysql
-        mysql -u root -e "CREATE USER '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';"
-        mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USER'@'%' WITH GRANT OPTION;"
-        mysql -u root -e "FLUSH PRIVILEGES;"        
+        mysql -u root -e "CREATE USER '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_PASSWORD';"
+        mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USER'@'localhost' WITH GRANT OPTION;"
+        mysql -u root -e "CREATE USER '$MYSQL_USER'@'_gateway' IDENTIFIED BY '$MYSQL_PASSWORD';"
+        mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USER'@'_gateway' WITH GRANT OPTION;"
+        mysql -u root -e "FLUSH PRIVILEGES;"
+        mysqladmin reload
         echo "Done."
     fi
     touch ~/mysql_user_added
